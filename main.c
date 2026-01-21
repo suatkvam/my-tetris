@@ -16,7 +16,11 @@ void	setup_tetris_terminal(struct termios *old)
 
 void	simple_delay(void)
 {
-	usleep(50000); // 50ms delay
+	volatile long long	i;
+
+	i = 0;
+	while (i < 35000000)
+		i++;
 }
 
 unsigned int	get_random_seed(void)
