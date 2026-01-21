@@ -17,7 +17,10 @@ static void	handle_escape(t_tetris *t)
 	char	seq[2];
 
 	if (read(STDIN_FILENO, &seq[0], 1) != 1)
+	{
+		t->running = 0;
 		return ;
+	}
 	if (seq[0] != '[')
 		return ;
 	if (read(STDIN_FILENO, &seq[1], 1) != 1)
