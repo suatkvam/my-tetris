@@ -38,6 +38,8 @@ typedef struct s_tetris
 	int             pos_y;
 	int             rotation;
 	int             current_piece;
+	int             paused;
+	int             menu_selection;
 }   t_tetris;
 
 typedef struct s_shell

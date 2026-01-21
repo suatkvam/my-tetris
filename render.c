@@ -87,14 +87,35 @@ void	render(t_tetris *t)
 	while (y < t->board_h)
 	{
 		append_string(buffer, &pos, "  |");
-		x = 0;
-		while (x < t->board_w)
+		if (t->paused && y == 8)
+			append_string(buffer, &pos, "      PAUSED      ");
+		else if (t->paused && y == 10)
 		{
-			if (t->board[y][x] || check_active_piece(t, x, y))
-				append_string(buffer, &pos, "[]");
+			if (t->menu_selection == 0)
+				append_string(buffer, &pos, "     > Return     ");
 			else
-				append_string(buffer, &pos, "  ");
-			x++;
+				append_string(buffer, &pos, "       Return     ");
+		}
+		else if (t->paused && y == 11)
+		{
+			if (t->menu_selection == 1)
+				append_string(buffer, &pos, "     > Exit       ");
+			else
+				append_string(buffer, &pos, "       Exit       ");
+		}
+		else if (t->paused && (y == 9 || y == 12))
+			append_string(buffer, &pos, "                  ");
+		else
+		{
+			x = 0;
+			while (x < t->board_w)
+			{
+				if (t->board[y][x] || check_active_piece(t, x, y))
+					append_string(buffer, &pos, "[]");
+				else
+					append_string(buffer, &pos, "  ");
+				x++;
+			}
 		}
 		append_string(buffer, &pos, "|\n");
 		y++;
