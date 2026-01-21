@@ -46,11 +46,11 @@ void	init_tetris(t_tetris *t, void *arena)
 	t->lines = 0;
 	t->tick = 0;
 	t->speed = calc_speed(t->level);
-	t->random_number_seed = 42;
+	t->random_number_seed = get_random_seed();
 	t->running = 1;
 	t->paused = 0;
 	t->menu_selection = 0;
 	t->game_over = 0;
-	t->next_piece = simple_rand(&t->random_number_seed) % 7;
+	t->next_piece = xorshift32(&t->random_number_seed) % 7;
 	spawn_piece(t);
 }

@@ -15,7 +15,7 @@
 void	spawn_piece(t_tetris *t)
 {
 	t->current_piece = t->next_piece;
-	t->next_piece = simple_rand(&t->random_number_seed) % 7;
+	t->next_piece = xorshift32(&t->random_number_seed) % 7;
 	t->rotation = 0;
 	t->pos_x = t->board_w / 2 - 2;
 	t->pos_y = 0;

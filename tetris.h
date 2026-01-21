@@ -7,6 +7,7 @@
 # include <termios.h>
 # include <time.h>
 # include <string.h>
+# include <fcntl.h>
 
 # define KEY_ROTATE 'w'
 # define KEY_LEFT 'a'
@@ -65,7 +66,8 @@ void    hard_drop(t_tetris *t);
 const int (*get_tetromino_shapes(void))[4][4][4];
 void    setup_tetris_terminal(struct termios *old);
 void    simple_delay(void);
-unsigned int simple_rand(unsigned int *seed);
+unsigned int xorshift32(unsigned int *state);
+unsigned int get_random_seed(void);
 
 /* Macros for compatibility */
 # define gc_malloc(arena, size) malloc(size)

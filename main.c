@@ -19,10 +19,29 @@ void	simple_delay(void)
 	usleep(50000); // 50ms delay
 }
 
-unsigned int	simple_rand(unsigned int *seed)
+unsigned int	get_random_seed(void)
 {
-	*seed = *seed * 1103515245 + 12345;
-	return (*seed / 65536) % 32768;
+	unsigned int	seed;
+	int				fd;
+
+	fd = open("/dev/urandom", O_RDONLY);
+	if (fd < 0)
+		return (42); // Fallback if urandom fails
+	read(fd, &seed, sizeof(seed));
+	close(fd);
+	return (seed);
+}
+
+unsigned int	xorshift32(unsigned int *state)
+{
+	unsigned int	x;
+
+	x = *state;
+	x ^= x << 13;
+	x ^= x >> 17;
+	x ^= x << 5;
+	*state = x;
+	return (x);
 }
 
 // Declaration from tetris.c
@@ -34,9 +53,6 @@ int	main(void)
 
 	// Need to zero out shell or at least cmd_arena since we pass it to gc_malloc macro
 	shell.cmd_arena = NULL;
-	
-	// Seed initialization
-	srand(time(NULL));
 
 	start_game(NULL, &shell);
 
